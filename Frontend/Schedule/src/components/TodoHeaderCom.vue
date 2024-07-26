@@ -13,9 +13,36 @@ const addTodo = () => {
 </script>
 
 <template>
-  <header>
-      <h1>Here is Schedual</h1>
-    <input type="text" @keyup.enter="addTodo" class="todo-input" v-model="newTodo">
-    <input type="submit" @click="addTodo">
-  </header>
+  <div>
+    <h3>To Do List</h3>
+    <div style="display: flex; align-items: flex-start;">
+      <q-input rounded standout bottom-slots v-model="newTodo" label="NEW" counter
+        @keyup.enter="addTodo"
+        color="white"
+        bg-color="primary"
+      >
+        <template v-slot:prepend>
+          <q-icon name="event" />
+        </template>
+        <template v-slot:append>
+          <q-icon name="close" @click="newTodo = ''" class="cursor-pointer" />
+        </template>
+        <template v-slot:hint>
+          Length
+        </template>
+      </q-input>
+      <q-btn
+        round
+        color="primary"
+        icon="add"
+        size="18.7px"
+        @click="addTodo"
+        style="margin-left: 1rem;"
+      />
+    </div>
+  </div>
 </template>
+
+<style>
+
+</style>

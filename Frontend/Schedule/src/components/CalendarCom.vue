@@ -7,11 +7,9 @@ nowDate.value = date.formatDate(Date.now(), 'YYYY-MM-DD')
 </script>
 
 <template>
-  <div>
     <q-date
       v-model="nowDate"
-      landscape
+      today-btn
       mask="YYYY-MM-DD"
     />
-  </div>
 </template>
