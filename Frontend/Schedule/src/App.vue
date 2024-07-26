@@ -1,65 +1,49 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { getTodoList } from '@/utils/testBackend'
+import { getTodoList, updateTodoList } from '@/api/todoList';
 
+import CalendarCom from './components/CalendarCom.vue';
+import TodoHeaderCom from './components/TodoHeaderCom.vue';
+import TodoListCom from './components/TodoListCom.vue'
+
+// 选中的日期
 const selectedDate = ref(new Date())
 
-// 获取数据
+// 数据
 const todoList = ref([])
-// todoList.value.push(...["11", "22", "33"])
 
-const newTodo = defineModel()
-
-const addTodo = () => {
-  if (!newTodo.value) return
+const addTodo = async (newTodo) => {
   todoList.value.push(newTodo.value)
-  newTodo.value = ""
-}
-const deleteTodo = (index) => {
-  // console.log(index);
-  todoList.value.splice(index, 1)
+  await updateTodoList(selectedDate.value, todoList.value)
 }
 
-watch(selectedDate, () => {
-  // console.log(getTodoList(selectedDate.value));
-  todoList.value = getTodoList(selectedDate.value)
+const deleteTodo = async (index) => {
+  todoList.value.splice(index, 1)
+  await updateTodoList(selectedDate.value, todoList.value)
+}
+
+// 监听日期，根据日期渲染数据
+watch(selectedDate, async () => {
+  try {
+    // console.log(new Date());
+    todoList.value = await getTodoList(selectedDate.value)
+  } catch(err) {
+    console.log(err);
+  }
 })
 
-onMounted(() => {
-  // console.log(selectedDate.value);
-  todoList.value = getTodoList(selectedDate.value)
-  
+onMounted(async () => {
+  todoList.value = await getTodoList(selectedDate.value)
 })
 
 </script>
 
 <template>
-  <el-calendar v-model="selectedDate">
+<div id="app">
+  <CalendarCom v-model="selectedDate"></CalendarCom>
+  <TodoHeaderCom @add-todo="addTodo"></TodoHeaderCom>
+  <TodoListCom :todo-list="todoList" @delete-todo="deleteTodo"></TodoListCom>
+</div>
 
-  </el-calendar>
-  <div class="todo-list">
-    <header>
-      Here is Schedual
-    </header>
-    <input type="text" class="todo-input" v-model="newTodo">
-    <input type="submit" @click="addTodo">
-    <ul>
-      <li v-for="(todo, index) in todoList" :key="index">
-        <input type="checkbox" class="todo-item">{{ todo }}
-        <button @click="deleteTodo(index)">删除</button>
-      </li>
-    </ul>
-  </div>
 </template>
 
-<style scoped>
-.todo-list {
-  flex: 0 1 100%;
-}
-.todo-input {
-  display: inline-block;
-}
-.todo-item {
-  display: inline-block;
-}
-</style>
