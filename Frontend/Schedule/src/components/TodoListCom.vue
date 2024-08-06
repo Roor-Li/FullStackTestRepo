@@ -16,12 +16,12 @@ const deleteTodo = async (todo) => {
       class="example-item"
     >
       <q-item-section avatar>
-        <q-avatar color="primary" text-color="white">
+        <q-avatar color="purple" text-color="white">
           {{ todo[0] }}
         </q-avatar>
       </q-item-section>
       <q-item-section>
-        <q-item-label>{{ todo }}</q-item-label>
+        <q-item-label style="color: blueviolet;">{{ todo }}</q-item-label>
       </q-item-section>
       <q-item-section side>
         <q-btn 
@@ -29,7 +29,7 @@ const deleteTodo = async (todo) => {
           push
           size="10px"
           icon="close"
-          color="primary"
+          color="purple"
           @click="deleteTodo(todo)"
         />
       </q-item-section>

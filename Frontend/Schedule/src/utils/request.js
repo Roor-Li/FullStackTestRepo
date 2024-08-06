@@ -1,13 +1,17 @@
 import axios from "axios";
 
+// /*global process */
+// const { VITE_BASE_URL } = process.env
+
 const instance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 3000,
 })
 
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
+  // console.log(instance.baseURL);
   return config
 }, function (error) {
   // 对请求错误做些什么

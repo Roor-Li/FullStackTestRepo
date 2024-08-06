@@ -14,12 +14,14 @@ const addTodo = () => {
 
 <template>
   <div>
-    <h3>To Do List</h3>
+    <h3 style="color: purple; font-family:'Quicksand', sans-serif;">
+      To Do List
+    </h3>
     <div style="display: flex; align-items: flex-start;">
       <q-input rounded standout bottom-slots v-model="newTodo" label="NEW" counter
         @keyup.enter="addTodo"
         color="white"
-        bg-color="primary"
+        bg-color="purple"
       >
         <template v-slot:prepend>
           <q-icon name="event" />
@@ -33,7 +35,7 @@ const addTodo = () => {
       </q-input>
       <q-btn
         round
-        color="primary"
+        color="purple"
         icon="add"
         size="18.7px"
         @click="addTodo"
