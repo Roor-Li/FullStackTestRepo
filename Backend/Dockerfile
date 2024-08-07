@@ -18,4 +18,5 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 
 # 暴露端口
 EXPOSE 8080
-ENTRYPOINT java -jar /tmp/app.jar &
+#ENTRYPOINT java -jar /tmp/app.jar &
+CMD ["java", "-jar", "-Dspring.profiles.active=prod", "/tmp/app.jar", "&"]
